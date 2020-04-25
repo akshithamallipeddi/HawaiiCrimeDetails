@@ -1,0 +1,51 @@
+﻿@model RootData
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>objectid</th>
+            <th>kilonbr</th>
+            <th>blockaddress</th>
+            <th>cmid</th>
+            <th>cmagency</th>
+            <th>date</th>
+            <th>type</th>
+            <th>status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.objectid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.kilonbr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.blockaddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.cmid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.cmagency)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.status)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.objectid }) |
+                @Html.ActionLink("Delete", "Delete", new { id = Model.objectid })
+            </td>
+        </tr>
+
+    </tbody>
+</table>

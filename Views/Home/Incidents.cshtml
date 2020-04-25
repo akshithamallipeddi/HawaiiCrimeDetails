@@ -1,0 +1,25 @@
+﻿@using HawaiiCrimeDetails.Models.ViewModel;
+@model List<CountbyType>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.type)
+                </td>
+                <td>
+                    @Html.ActionLink(item.count.ToString(), "IncidentDetails", new { id = item.type })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
