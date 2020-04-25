@@ -35,7 +35,7 @@ namespace HawaiiCrimeDetails
             //    (options => options.UseSqlServer(connection));
 
             // Use SQL Database if in Azure, otherwise, use SQLite
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production" || Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
                 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["DbConnection:ConnectionString"]));
             else
                 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:Crime:ConnectionString"]));
