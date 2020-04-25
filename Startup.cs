@@ -30,9 +30,14 @@ namespace HawaiiCrimeDetails
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration["Data:Crime:ConnectionString"]));
+            // Use SQL Database if in Azure, otherwise, use SQLite
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+                services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+            else
+                services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(Configuration["Data:Crime:ConnectionString"]));
+
+            // Automatically perform database migration
+            services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
 
             services.AddCors(
                 options => options.AddPolicy("AllowCors",
