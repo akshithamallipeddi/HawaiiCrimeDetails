@@ -41,7 +41,7 @@ namespace HawaiiCrimeDetails
                 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:Crime:ConnectionString"]));
 
             //Automatically perform database migration
-            services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
+            //services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
 
             services.AddCors(
                 options => options.AddPolicy("AllowCors",
