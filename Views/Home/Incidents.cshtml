@@ -1,25 +1,32 @@
 ﻿@using HawaiiCrimeDetails.Models.ViewModel;
 @model List<CountbyType>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Type</th>
-            <th>Count</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
+<h2>Master Page - Number of crimes by type.</h2>
+<p>
+    The below table provides the count of reported crimes offenses by type using data from
+    <a href="https://crime-data-explorer.fr.cloud.gov/api">Crime Data Explorer API </a>.
+    Clicking on the number, displays the data of that type.
+</p>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.type)
-                </td>
-                <td>
-                    @Html.ActionLink(item.count.ToString(), "IncidentDetails", new { id = item.type })
-                </td>
+                <th>Type</th>
+                <th>Count</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.type)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.count.ToString(), "IncidentDetails", new { id = item.type })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

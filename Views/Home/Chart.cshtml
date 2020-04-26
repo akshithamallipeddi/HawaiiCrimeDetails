@@ -1,11 +1,9 @@
 ﻿@{
     ViewData["Title"] = "chart";
 }
+<h2>Chart View - Number of crimes by type.</h2>
 
-<!DOCTYPE HTML>
-<html>
-<head>
-    <script>
+<script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -13,13 +11,12 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	title: {
 		text: "Crime Incidents from the Honolulu Police Department"
 	},
-
-	axisY: {
-		title: "Percentage of Crime types",
+        axisY: {
+		title: "Number of crimes by type",
 		gridThickness: 0
 	},
 	data: [{
-		type: "pie",
+		type: "bar",
 		indexLabel: "{label} {y}",
 		dataPoints: @Html.Raw(ViewBag.DataPoints)
 	}]
@@ -27,10 +24,14 @@ var chart = new CanvasJS.Chart("chartContainer", {
 chart.render();
 
 }
-    </script>
-</head>
+</script>
 <body>
-    <div id="chartContainer" style="height: 500px; width: 90%;"></div>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<div id="chartContainer" style="height: 300px; width: 90%;"></div>
+	<br/>
+	<p>
+		This page displays a bar chart which consists of number of crimes by type.
+		The application is updated regurarly as per the data. The number of crimes by type will update as per the CRUD operations on Incidents page.
+	</p>
+
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
-</html> 

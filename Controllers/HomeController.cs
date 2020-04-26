@@ -48,7 +48,7 @@ namespace HawaiiCrimeDetails.Controllers
             {
                 counttypes.Add(new CountbyType { type = a.Item1, count = a.Item2 });
             }
-
+            counttypes.OrderBy(a => a.type);
             return View(counttypes);
         }
 
@@ -62,11 +62,11 @@ namespace HawaiiCrimeDetails.Controllers
             return View(details);
         }
 
-        //[HttpGet]
-        //public IActionResult Edit()
-        //{
-        //    return View(dbContext.data.OrderByDescending(x => x.date).ToList());
-        //}
+        [HttpPost]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
         [HttpGet]
         public IActionResult Edit(string id)
@@ -102,13 +102,14 @@ namespace HawaiiCrimeDetails.Controllers
         public ActionResult Chart()
         {
             List<Chart> dataPoints = new List<Chart>();
+            var type_counts = dbContext.data.GroupBy(a => a.type).OrderBy(group => group.Key).Select(group => Tuple.Create(group.Key, group.Count())).ToList();
 
-            dataPoints.Add(new Chart("THEFT/LARCENY", 30));
-            dataPoints.Add(new Chart("VEHICLE BREAK-IN/THEFT", 37));
-            dataPoints.Add(new Chart("BURGLARY", 14));
-            dataPoints.Add(new Chart("MOTOR VEHICLE THEFT", 12));
-            dataPoints.Add(new Chart("VANDALISM", 7));
-
+            List<Chart> counttypes = new List<Chart>();
+            foreach (var a in type_counts)
+            {
+                dataPoints.Add(new Chart(a.Item1, a.Item2));
+            }
+            dataPoints.OrderBy(a => a.Label);
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
             return View();
