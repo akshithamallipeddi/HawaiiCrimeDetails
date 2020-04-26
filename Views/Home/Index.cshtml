@@ -2,7 +2,86 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h2>
+    <b>
+        <span style="color:midnightblue;">
+            Hawaii Crime Data
+        </span>
+    </b>
+</h2>
+<div>
+    <p>
+        <span style="color:darkred;">
+            <b>
+                This application provides the data of crime rates in Hawaii through Crime department via their public <a href="https://crime-data-explorer.fr.cloud.gov/api">API</a>.
+                The Crime Data Explorer is a website that allows law enforcement and the general public to more easily access Uniform Crime Reporting (UCR) data. Over 18,000 city,
+                university and college, county, state, tribal, and federal law enforcement agencies voluntarily report crime data to the program, and the FBI publishes it in annual
+                reports.
+            </b>
+        </span>
+    </p>
+    <p>
+        <b>
+            <span style="color:midnightblue;">
+                The rate of crime is increasing day by day in all societies in the world, most of the people believe that there are a lot which can be done by both the governments and the individuals to reduce the crimes in communities.
+                A lot of important measures, on the one hand, can be taken by the governments in order to reduce or even eradicate different types of crimes. First, governments can introduce more police forces everywhere to monitor people's activities and stop them from committing crimes. Second, the state can apply new technologies such as surveillance cameras in the streets, shopping centers, restaurants and all
+                public places to cease criminals .Third, strict punishments on criminals can have really preventive and deterrent effects on all age groups in society , so by using harsh penalties like imprisonment, physical or financial punishments the rate of crimes can be decreased.
+            </span>
+        </b>
+    </p>
+    <p>
+        <b>
+            <span style="color:darkred;">
+                When it comes to violent crime including murder, rape, aggravated assault, and robbery, Hawaii is the 38th most dangerous state with 259.2 violent crimes per
+                100,000 people.
+        </b>
+    </p>
+    <p>
+        <b>
+            <span style="color:midnightblue;">
+                It is important to note that crime rates are based on the number of crimes per 100,000 residents. The resident population encompasses the number of people whose usual place of residence is in an area. It includes military personnel stationed in the area and residents temporarily absent, but excludes visitors. The FBI uses resident population to determine crime rates for all states for comparison purposes.
+                However, due to Hawaii’s high visitor population at any given time, the crime rate would be more accurate for Hawaii if de facto population was used to calculate crime rates. De facto population includes the number of people physically present in the state: residents, tourists, and non-resident military personnel. Considering Hawaii’s relatively small resident population and large visitor population,
+                the crime rates are skewed to be higher since population is based on residents and doesn’t factor in visitors.
+            </span>
+        </b>
+    </p>
+    <br />
+    <b>
+        <span style="color:darkred;">
+            <a asp-area="" asp-controller="Home" asp-action="Incidents">Incidents</a> : This tab fetches data of crime incidents reported by FBI. It provides the
+            count of reported crimes offenses by location using data from
+            <a href="https://crime-data-explorer.fr.cloud.gov/api">Crime Data Explorer API </a> .
+            The Data consists of CMID, CMAgency, Type of Crime, Date it occured along with block address.
+            This data can also be saved in the local database.
+        </span>
+    </b>
+    <br />
+    <b>
+        <span style="color:darkred;">
+            <a asp-area="" asp-controller="Home" asp-action="Chart">Chart</a> : This tab gives interactive pie chart of the rate of crime by type by fetching data from <a href="https://crime-data-explorer.fr.cloud.gov/api">Crime Data Explorer API</a>.
+        </span>
+    </b>
+    <br />
+    <b>
+        <span style="color:darkred;">
+            <a asp-area="" asp-controller="Home" asp-action="AboutUs">AboutUs</a> :To know more about the development team, Please check this <a asp-area="" asp-controller="Home" asp-action="AboutUs">page</a>.
+        </span>
+    </b>
+
+    <br />
+
+    <p>
+        <b>
+            <span style="color:darkred;">
+                Following learning objectives are fulfilled -
+                <ul>
+                    <li>Connection to API and saving it in database.</li>
+                    <li>Database design and use.</li>
+                    <li>Master-detail relationship.</li>
+                    <li>CRUD operations.</li>
+                    <li>Chart View</li>
+                </ul>
+            </span>
+        </b>
+    </p>
 </div>
