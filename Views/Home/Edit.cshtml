@@ -7,7 +7,7 @@
 <div>
     @Html.ActionLink("Back to List", "Incidents")
 </div>
-<h2>Edit Details of record - @Model.cmid</h2>
+<h4>Edit Details of record - @Model.cmid</h4>
 
 
 @using (Html.BeginForm())
@@ -26,7 +26,7 @@
                             new SelectListItem() { Text = "MOTOR VEHICLE THEFT", Value = "MOTOR VEHICLE THEFT" },
                             new SelectListItem() { Text = "LARCENCY", Value = "LARCENCY" },
                             new SelectListItem() { Text = "VANDALISM", Value = "VANDALISM" },
-                            new SelectListItem(){Text = "VEHICLE BREAK-IN", Value = "VEHICLE BREAK IN" }})
+                            new SelectListItem(){Text = "VEHICLE BREAK-IN", Value = "VEHICLE BREAK-IN" }})
                 @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })
             </div>
         </div>
