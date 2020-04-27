@@ -1,61 +1,75 @@
-﻿@model RootData
-
+﻿@using HawaiiCrimeDetails.Models.ViewModel;
+@model Details
 @{
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-
-
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Incidents")
 </div>
+<h2>Edit Details of record - @Model.cmid</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>objectid</th>
-            <th>kilonbr</th>
-            <th>blockaddress</th>
-            <th>cmid</th>
-            <th>cmagency</th>
-            <th>date</th>
-            <th>type</th>
-            <th>status</th>
-        </tr>
-    </thead>
 
-    <tbody>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => Model.objectid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.kilonbr)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.blockaddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.cmid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.cmagency)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.status)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = Model.objectid }) |
-                @Html.ActionLink("Delete", "Delete", new { id = Model.objectid })
-            </td>
-        </tr>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-    </tbody>
-</table>
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.objectid)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.type, new List<SelectListItem> {
+                            new SelectListItem() { Text = "BURGLARY", Value = "BURGLARY" },
+                            new SelectListItem() { Text = "MOTOR VEHICLE THEFT", Value = "MOTOR VEHICLE THEFT" },
+                            new SelectListItem() { Text = "LARCENCY", Value = "LARCENCY" },
+                            new SelectListItem() { Text = "VANDALISM", Value = "VANDALISM" },
+                            new SelectListItem(){Text = "VEHICLE BREAK-IN", Value = "VEHICLE BREAK IN" }})
+                @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.cmagency, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.cmagency, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.cmagency, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.blockaddress, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.blockaddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.blockaddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.status, new List<SelectListItem> {
+                            new SelectListItem() { Text = "U", Value = "U" },
+                            new SelectListItem() { Text = "M", Value = "M" }})
+                @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-info">Save</button>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    if("@ViewBag.dbUpdate" !="")
+        alert("Record updated successfully");
+</script>

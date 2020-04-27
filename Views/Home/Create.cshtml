@@ -1,4 +1,5 @@
-﻿@model RootData
+﻿@using HawaiiCrimeDetails.Models.ViewModel;
+@model Details
 
 @{
     ViewBag.Title = "Create";
@@ -6,6 +7,50 @@
 
 <h2>Create</h2>
 
+
+<div>
+    @Html.ActionLink("Back to List", "Incidents")
+</div>
+
+<h2>Add new details of crime</h2>
+
+<body>
+    <form>
+        <fieldset>
+
+            <p>
+                <label>Select Type of Criminal Activity</label>
+                <select id="myList">
+                    <option value="1">BURGLARY</option>
+                    <option value="2">MOTOR VEHICLE THEFT</option>
+                    <option value="3">LARCENCY</option>
+                    <option value="4">VANDALISM</option>
+                    <option value="5">VEHICLE BREAK IN</option>
+                </select>
+
+            </p>
+            <p>
+
+                <label>Select Date Of Crime Occured</label>
+                <input type="date">
+            </p>
+
+            <p>
+                <label>Select the CMAgency</label>
+                <select id="myList">
+                    <option value="1">Honululu PD, HI</option>
+                </select>
+            </p>
+            <p>
+                <label>Enter the Block address</label>
+                <input type="text">
+            </p>
+            <div class="form-group">
+                @Html.ActionLink("Save", "Save")
+            </div>
+        </fieldset>
+    </form>
+</body>
 
 <div>
     @Html.ActionLink("Back to List", "Index")

@@ -55,8 +55,6 @@ namespace HawaiiCrimeDetails.Controllers
         [HttpGet("{id}")]
         public IActionResult IncidentDetails(string id, string changesaved)
         {
-            id = id.Replace("%2F", "/");
-
             List<CrimeIncidents> details = db.crimeIncident.Where(a => a.type == id).OrderByDescending(x => x.date).ToList();
 
             List<Details> dets = new List<Details>();
@@ -80,20 +78,48 @@ namespace HawaiiCrimeDetails.Controllers
             return View(dets);
         }
 
-        //[HttpPost]
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        public IActionResult Create(Details d)
+        {
+            return View();
+        }
 
-        //[HttpGet]
-        //public IActionResult Edit(int id)
-        //{
-        //    RootData d = crimeIncident.Where(a => a.objectid == id).FirstOrDefault();
-        //    return View(d);
-        //}
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            CrimeIncidents a = db.crimeIncident.Where(a => a.objectid == id).FirstOrDefault();
 
-        
+            a.Agency = db.Agency.Where(t => t.cmid == a.cmid).FirstOrDefault();
+            Details d = new Details();
+            d.objectid = a.objectid;
+            d.blockaddress = a.blockaddress;
+            d.cmid = a.cmid;
+            d.cmagency = a.Agency.cmagency;
+            d.date = a.date;
+            d.type = a.type;
+            d.status = a.status;
+
+            return View(d);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Details d)
+        {
+            CrimeIncidents a = db.crimeIncident.Where(a => a.objectid == d.objectid).FirstOrDefault();
+            var old = a;
+            a.Agency = db.Agency.Where(t => t.cmid == a.cmid).FirstOrDefault();
+            a.blockaddress = d.blockaddress;
+            a.type = d.type;
+            a.status = d.status;
+
+            db.crimeIncident.Remove(old);
+            db.SaveChanges();
+            db.crimeIncident.Add(a);
+            db.SaveChanges();
+            
+            ViewBag.dbUpdate = 1;
+            return View(a);
+        }
         public IActionResult Delete(int id)
         {
             string type = "";
