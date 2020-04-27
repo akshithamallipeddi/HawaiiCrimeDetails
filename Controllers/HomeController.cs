@@ -17,13 +17,13 @@ namespace HawaiiCrimeDetails.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public ApplicationDbContext dbContext;
+        public ApplicationDbContext db;
         private readonly IMapper _mapper;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IMapper mapper)
         {
             _logger = logger;
-            dbContext = context;
+            db = context;
             _mapper = mapper;
         }
 
@@ -36,12 +36,12 @@ namespace HawaiiCrimeDetails.Controllers
         [HttpGet]
         public IActionResult IncidentDetails()
         {
-            return View(dbContext.data.OrderByDescending(x => x.date).ToList());
+            return View(db.crimeIncident.OrderByDescending(x => x.date).ToList());
         }
         [HttpGet]
         public IActionResult Incidents()
         {
-            var type_counts = dbContext.data.GroupBy(a => a.type).OrderBy(group => group.Key).Select(group => Tuple.Create(group.Key, group.Count())).ToList();
+            var type_counts = db.crimeIncident.GroupBy(a => a.type).OrderBy(group => group.Key).Select(group => Tuple.Create(group.Key, group.Count())).ToList();
 
             List<CountbyType> counttypes = new List<CountbyType>();
             foreach (var a in type_counts)
@@ -53,45 +53,66 @@ namespace HawaiiCrimeDetails.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult IncidentDetails(string id)
+        public IActionResult IncidentDetails(string id, string changesaved)
         {
             id = id.Replace("%2F", "/");
 
-            List<RootData> details = dbContext.data.Where(a => a.type == id).OrderByDescending(x => x.date).ToList();
-          
-            return View(details);
+            List<CrimeIncidents> details = db.crimeIncident.Where(a => a.type == id).OrderByDescending(x => x.date).ToList();
+
+            List<Details> dets = new List<Details>();
+
+            foreach(CrimeIncidents a in details)
+            {
+                a.Agency = db.Agency.Where(t => t.cmid == a.cmid).FirstOrDefault();
+                Details d = new Details();
+                d.objectid = a.objectid;
+                d.blockaddress = a.blockaddress;
+                d.cmid = a.cmid;
+                d.cmagency = a.Agency.cmagency;
+                d.date = a.date;
+                d.type = a.type;
+                d.status = a.status;
+
+                dets.Add(d);
+            }
+            if(changesaved == "True")
+                ViewBag.dbSuccessDel = 1;
+            return View(dets);
         }
 
-        [HttpPost]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //[HttpPost]
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        [HttpGet]
-        public IActionResult Edit(string id)
-        {
-            RootData d = dbContext.data.Where(a => a.objectid == id).FirstOrDefault();
-            return View(d);
-        }
+        //[HttpGet]
+        //public IActionResult Edit(int id)
+        //{
+        //    RootData d = crimeIncident.Where(a => a.objectid == id).FirstOrDefault();
+        //    return View(d);
+        //}
 
         
-        public IActionResult Delete(string id)
+        public IActionResult Delete(int id)
         {
             string type = "";
             try
             {
-                var del = dbContext.data.Where(a => a.objectid == id).FirstOrDefault();
+                var del = db.crimeIncident.Where(a => a.objectid == id).FirstOrDefault();
+                var cm = db.Agency.Where(a => a.cmid == del.cmid).FirstOrDefault();
                 type = del.type;
-                dbContext.data.Remove(del);
-                dbContext.SaveChanges();
+                db.Agency.Remove(cm);
+                db.crimeIncident.Remove(del);
+                db.SaveChanges();
+               
             }
             catch (Exception e)
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
               //  return RedirectToAction("Delete", new { id = id, saveChangesError = true });
             }
-            return RedirectToAction("IncidentDetails", new { id = type });
+            return RedirectToAction("IncidentDetails", new { id = type, changesaved = true });
         }
         public IActionResult AboutUs()
         {
@@ -102,7 +123,7 @@ namespace HawaiiCrimeDetails.Controllers
         public ActionResult Chart()
         {
             List<Chart> dataPoints = new List<Chart>();
-            var type_counts = dbContext.data.GroupBy(a => a.type).OrderBy(group => group.Key).Select(group => Tuple.Create(group.Key, group.Count())).ToList();
+            var type_counts = db.crimeIncident.GroupBy(a => a.type).OrderBy(group => group.Key).Select(group => Tuple.Create(group.Key, group.Count())).ToList();
 
             List<Chart> counttypes = new List<Chart>();
             foreach (var a in type_counts)

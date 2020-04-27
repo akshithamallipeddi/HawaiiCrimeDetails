@@ -1,4 +1,6 @@
-﻿@model IEnumerable<RootData>
+﻿@using HawaiiCrimeDetails.Models.ViewModel;
+@model IEnumerable<Details>
+
 <h2>Details Page - Details of the crime record.</h2>
 <p>
     The below table provides the details of reported crimes. "Back to list" will take you to the Incidents page.
@@ -28,7 +30,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.cmid)
                     </td>
-                    <td  style="width: 150px;">
+                    <td style="width: 150px;">
                         @Html.DisplayFor(modelItem => item.cmagency)
                     </td>
                     <td>
@@ -52,3 +54,8 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    if("@ViewBag.dbSuccessDel" !="")
+        alert("Record deleted successfully");
+</script>

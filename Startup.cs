@@ -30,18 +30,11 @@ namespace HawaiiCrimeDetails
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
 
-            //var connection = @"Data Source=group8serverdis.database.windows.net;Initial Catalog=CrimeData;User ID=group8serverdis;Password=Quarantine@2020;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            //services.AddDbContext<ApplicationDbContext>
-            //    (options => options.UseSqlServer(connection));
-
-            // Use SQL Database if in Azure, otherwise, use SQLite
+            //Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production" || Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
                 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["DbConnection:ConnectionString"]));
             else
                 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:Crime:ConnectionString"]));
-
-            //Automatically perform database migration
-            //services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
 
             services.AddCors(
                 options => options.AddPolicy("AllowCors",
@@ -52,7 +45,7 @@ namespace HawaiiCrimeDetails
                                 .AllowAnyHeader();
                     })
             );
-            //  services.AddMvc();
+
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
