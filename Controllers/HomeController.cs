@@ -118,7 +118,17 @@ namespace HawaiiCrimeDetails.Controllers
             db.SaveChanges();
             
             ViewBag.dbUpdate = 1;
-            return View(a);
+
+            Details det = new Details();
+            det.objectid = a.objectid;
+            det.blockaddress = a.blockaddress;
+            det.cmid = a.cmid;
+            det.cmagency = a.Agency.cmagency;
+            det.date = a.date;
+            det.type = a.type;
+            det.status = a.status;
+
+            return View(det);
         }
         public IActionResult Delete(int id)
         {
